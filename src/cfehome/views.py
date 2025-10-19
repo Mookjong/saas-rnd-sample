@@ -1,13 +1,22 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
+from visits.models import PageVisit
 
 
 
 def home_page_view(request: HttpRequest) -> HttpResponse:
+    
+    PageVisit.objects.create(path=request.path)
+    
+    qs = PageVisit.objects.all()
+    page_qs = PageVisit.objects.filter(path=request.path).order_by('-timestamp')
+    
     my_title = "My Home Page"
     my_context = {
         "title": my_title,
-        "my_text": "This is about me",
+        "page_visit_count": page_qs.count(),
+        "percent": (page_qs.count() / qs.count()) * 100 if qs.count() > 0 else 0,
+        "total_visit_count": qs.count(),
     }
     html_template  = "home.html"
     

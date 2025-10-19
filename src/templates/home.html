@@ -6,7 +6,17 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
-    <p>{{ my_text }}</p>
+
+    <p>Page Visits: {{ page_visit_count }}</p>
+    <p>Percent: {{ percent|floatformat:2 }}%</p>
+    <p>Total Visits: {{ total_visit_count }}</p>
+    
+    {% for visit in queryset %}
+        <p>{{ visit }}</p>
+
+    {% empty %}
+        <p>No visits found.</p>
+    {% endfor %}
 
     {% include "snippets/welcome-user-msg.html" %}
 {% endblock %}
