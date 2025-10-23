@@ -7,4 +7,4 @@ class PageVisit(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Visited {self.path} at {self.timestamp}"
+        return f"Visited: {self.path} at {self.timestamp}"
